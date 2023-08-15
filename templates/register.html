@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Register</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <style>
+            body {
+                background-size: cover;
+                background-position: center;
+                background-image: url('https://media.istockphoto.com/id/825778252/photo/blue-sky-and-white-clouds-background.jpg?s=612x612&w=0&k=20&c=u1jkNZutv8H344KPxrgtfIHOMuWdU4H8PQ7_rvSI-wI=');
+                padding: 115px;
+            }
+            .custom-size {
+                width: 250px;
+                height: 150px;
+                
+            }
+            .custom-bg {
+                background-color: violet; /* Custom green color */
+                color: #fff; /* Text color for better visibility */
+            }
+            .register-button {
+                padding: 10px 20px;
+                font-size: 18px;
+                font-weight: bold;
+                color: black;
+                background-image: linear-gradient(45deg, red, pink, orange);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            h3 {
+                font-family: "Arial", "Helvetica", sans-serif;
+                font-style: italic;
+            }
+            </style>
+    </head>
+    <body>
+        <center><br>
+        <div class="card custom-size">
+            <div class="card custom-bg">
+            <h3 style="color: black;" ><b>SIGN UP</b></h3>
+            <form action="" method="POST">{% csrf_token %}
+                <br>
+            <input type="text" name="username" id="username" placeholder="Enter Username" required>
+            <br></br>
+            <input type="email" name="email" id="email" placeholder="Enter Email" required>
+            <br></br>
+            <input type="password" name="password" placeholder="Enter password" required>
+            <br></br>
+            <button type="submit" class="register-button" >Register</button>
+        </form>
+    </div>
+    </center>
+</div>
+</body>
+</html>

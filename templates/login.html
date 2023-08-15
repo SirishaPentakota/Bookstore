@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-image: url('https://media.istockphoto.com/id/825778252/photo/blue-sky-and-white-clouds-background.jpg?s=612x612&w=0&k=20&c=u1jkNZutv8H344KPxrgtfIHOMuWdU4H8PQ7_rvSI-wI=');
+            padding: 115px;
+        }
+        .custom-size {
+            width: 250px;
+            height: 150px;
+        }
+        .login-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+            background-image: linear-gradient(45deg, red, pink, orange);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .custom-bg {
+            background-color:violet; /* Custom green color */
+            color: #fff; /* Text color for better visibility */
+        }
+    </style>
+    </head>
+    <body>
+        <center>
+            <div class="card custom-size">
+            <div class="card custom-bg">
+            <img src="https://youngwisdombookstore.com/cdn/shop/files/YWB_CMYK_230821_1200x1200.jpg?v=1637395997"
+                style="width: 185px;" alt="logo">
+            <form  action="" method="POST">{% csrf_token %}
+            <p style="color: black;"> Please login to your account</p>
+            <br>
+            <input type="text" name="username" id="username" placeholder="Enter Username" required>
+            <br></br>
+            <input type="password" name="password" placeholder="Enter password" required>
+            <br></br>
+            <button type="submit" class="login-button">Login</button>
+            <p style="color: black;" >Don't have account? <a  href="/register/">Register</a></p>
+            </div>
+            </div>
+        </center>
+    </body>
+</html>

@@ -1,0 +1,168 @@
+@import 'bookstyles.css';
+body {
+  background-image: url('https://images.unsplash.com/photo-1622010652810-eba11f92f90f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8M');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0;
+}
+.navbar {
+  background-color: blue;
+  color: #fff;
+  display: flex;
+  padding: 15px;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-search {
+  display: flex;
+  margin-left: 400px;
+  align-items: center;
+}
+.navbar-search input {
+  padding: 10px;
+  border: None;
+  padding-right: 210px;
+  /* Add space for the search icon */
+}
+.navbar-search button {
+  padding: 10px;
+  background-color: white;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+.login-button {
+  padding: 8px 16px;
+  background-color: #ff9f00;
+  border: none;
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none; /* Remove the underline from the login button */
+}
+.my-account {
+  position: relative;
+  margin-right: 5px;
+  /* Add some space between "My Account" and other items on the right */
+}
+.my-account-link {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  /* Add other styles for the "My Account" link as needed */
+}
+.my-account-link img {
+  width: 28px;
+  height: 28px;
+  margin-right: 12px; /* Add some space between the icon and text */
+  /* Add other styles for the icon as needed */
+}
+
+.horizontal-card {
+  height: 60px; /* Adjust the height as needed */
+  width: 110%;
+  background-color: #ffffff; 
+}
+.sidebar {
+  margin-left: 50px;
+}
+.vertical-card {
+  height: flex; /* Adjust the height as needed */
+  width: 20%;
+  background-color: #ffffff; /* Set the background color of the card */
+  border: 1px solid #cccccc; /* Add a border around the card */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a box shadow for a subtle effect */
+}
+
+#remainingFilters {
+  display: block;  /* Show the remaining filters */
+  margin-top: 10px;  /* Add some spacing between main and remaining filters */
+}
+.img {
+  width: 150px;
+  margin-right: 10px;
+}
+.book-details {
+  flex: 1;
+}
+.pdf-links {
+  display: flex;
+  gap: 10px;
+}
+.pdf-links a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+#dropdown-content {
+  display: none;
+  position: absolute;
+  background-color:white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color:blue;
+}
+.username {
+  color:black; 
+  text-decoration:solid;
+  text-size-adjust: 10px;/* Change the color to your desired value */
+}
+img {
+  width: 100px;
+  height: auto;
+}
+.book-details {
+    margin-left: 25px;
+    flex: 1;
+}
+.pdf-links a {
+  display: inline-block;
+  padding: 5px 8px;
+  justify-content: center;
+ align-items: center;
+ gap:5px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  
+}
+.dashboard-button{
+  padding: 8px 16px;
+  background-color: #ff9f00;
+  border: none;
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
+}
+.background-container {
+  position: relative;
+  text-align: center;
+}
+.remove-button {
+  background-color:#ff9f00 ;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+

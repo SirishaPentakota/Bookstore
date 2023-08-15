@@ -1,0 +1,19 @@
+<!-- add_book.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Book</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+  </head>
+  <body>
+    <center>
+      <h1>Add Book</h1>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p }}
+        <input type="submit" value="Add Book" />
+      </form>
+    </center>
+  </body>
+</html>
