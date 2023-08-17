@@ -15,7 +15,7 @@
             padding: 115px;
         }
         img {
-    width: 90px;
+    width: 65px;
     height:auto;
   }
 .book-details {
@@ -61,9 +61,9 @@
               {% endif %}
               {% if user.is_authenticated %}
               {% if book in user.userprofile.saved_books.all %}
-              <a href="{% url 'dashboard' %}" style="background-color: grey" class="save-button">Go to Cart</a>
+              <a href="{% url 'dashboard' %}" style="background-color: orangered" class="save-button">Go to Cart</a>
               {% else %}
-              <a href="{% url 'save_book' book.title %}"  style="background-color: grey" class="save-button">Add to Cart</a>
+              <a href="{% url 'save_book' book.title %}"  style="background-color:orangered" class="save-button">Add to Cart</a>
               {% endif %}
               {% endif %}
             </div>
