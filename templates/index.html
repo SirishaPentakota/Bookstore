@@ -4,126 +4,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-<HASH>" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./static/styles.css" type='text/css' ></link>
     <title>online bookstore</title>
     <script src="./static/scripts.js" type="text/javascript"></script>
-    <style>
-.horizontal-card {
-  height: 55px; /* Adjust the height as needed */
-  width: 100%;
-  font-family:  'Pacifico'; 
-  background-color:white;
-  
-  overflow: hidden; 
+
+<style>
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('https://cdnblog.webkul.com/blog/wp-content/uploads/2021/12/online-books-scaled.jpg');
+    background-size: 100% 100% !important; /* Adjust percentage values as needed */
+    background-repeat: no-repeat !important;
+    background-position: center bottom !important;
+
+ 
 }
-.marquee h2 {
-            display: inline-block;
-            padding: 0 20px;
-            font-family: 'pacifco'; /* Change font family */
-            font-size: 28px; /* Adjust font size as needed */
-            text-transform: uppercase; /* Uppercase letters */
-            animation: color-change 15s linear infinite alternate; /* Apply color-changing animation */
-            transform: translateZ(30px) rotateY(0deg); /* Initial rotation angle and depth */
-            transform-origin: center center;
+ 
+.image-gallery {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
         }
-        @keyframes color-change {
-            0%, 100% {
-              color: #00ff00;/* Start and end color */
-            }
-            25% {
-                color:#0000ff ; /* Color after 25% of the animation */
-            }
-            50% {
-                color:#ff0000 ; /* Color after 50% of the animation */
-            }
-            75% {
-                color: #ffff00; /* Color after 75% of the animation */
-            }
-        }
-      </style>
-    <script>
-       function toggleDropdown() {
-    var dropdownContent = document.getElementById("dropdown-content");
-    if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
-    } else {
-        dropdownContent.style.display = "block";
-    }
+     
+.image-gallery img {
+    width: 450px; /* You can adjust this value to control the image width */
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer;
 }
-    </script>
+.horizontal {
+    margin: 0;
+    padding: 0;
+    background-size: cover!important; /* Adjust percentage values as needed */
+    background-repeat: no-repeat !important;
+    background-position: center bottom !important;
+
+}
+.image img {
+    width: 100%; /* You can adjust this value to control the image width */
+    height: 460px;
+     object-fit: cover;
+    
+   
+}
+.footer {
+    display: none; /* Initially hide the footer */
+    background-color: blue;
+    color: white;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+</style>
+    
 </head>
 <body>
-    <div class="navbar" style="background-color: blue;">
-    <div class="navbar-search" >
-    <form method="GET" action="{% url 'book_search' %}"> 
-      <input type="text" name="query" placeholder="Search for books...">
-      <button type="submit">Search</button>
-      </form>
+<div>
+    <div class="navbar">
+        {% include 'navbar.html' %}
     </div>
-    <div class="navbar-login">
-      {% if not user.is_authenticated %}
-        <a href="{% url 'login' %}" class="login-button">Login</a>
-      {% endif %}
-    </div>
-    <div class="dashboard-link">
-      {% if user.is_authenticated %}
-      <a href="{% url 'dashboard' %}" class="dashboard-button">Cart</a>
-      {% endif %}
-    </div>
-    <div class="my-account">
-        <a href="#" class="my-account-link" onclick="toggleDropdown()">
-          <img src="https://st2.depositphotos.com/1853861/7026/v/950/depositphotos_70267151-stock-illustration-my-account-icon.jpg" alt="My Account Icon">
-          My Account
-        </a>
-        <div id="dropdown-content">
-          {% if user.is_authenticated %}
-          <br>
-          <span class="username">{{ user.username }}&nbsp;&nbsp;&nbsp;&nbsp;</span><br><br>
-          <b> <a href="{% url 'logout' %}" style="color:black;">Logout</a></b>
-          {% endif %}
-          <br>
+    <div class="horizontal" style="background-color: white; width: 100%; margin: 0 auto;">
+        <div class="image">
+            <a >
+                <img src="https://cdnblog.webkul.com/blog/wp-content/uploads/2021/12/online-books-scaled.jpg" alt="Image 1" >
+            </a>
+            
         </div>
-      </div>
-  </div>
-  <div class="horizontal-card">
-     <center> 
-      <marquee  direction="right"  height="100px">
-      <div class="marquee">
-      <h2>Siri online Bookstore </h2>
-      </div>
-      </marquee>
-    </center>
-  </div>
-  <div class="vertical-card">
-    <div class="sidebar">
-        <h2> Filters</h2>
-        <p class="categories">Categories</p>
-        <h3>Books</h3>
-        <ul>
-          {% for category in categories %}
-          <li><a href="{% url 'filtered_books' category|lower %}" style="text-decoration: none; color: black;">{{ category }}</a></li>
-          {% endfor %}
-        </ul>
-        <a href="{% url 'filtered_books' 'all' %}" style="text-decoration: none; color: blue;">All Books</a><br>
-        <a href="{% url 'filtered_books' 'Python'|lower %}" style="text-decoration: none; color: black;">Python</a><br>
-        <a href="{% url 'filtered_books' 'Machine Learning'|lower %}" style="text-decoration: none; color: black;">Machine learning</a><br>
-        <a href="{% url 'filtered_books' 'SSC'|lower %}" style="text-decoration: none; color: black;">SSC</a><br>
-        <a href="{% url 'filtered_books' 'Stories'|lower %}" style="text-decoration: none; color: black;">Stories</a><br>
-        <a href="{% url 'filtered_books' 'mathematics'|lower %}" style="text-decoration: none; color: black;">Mathematics</a><br>
-        <a href="{% url 'filtered_books' 'Chemistry'|lower %}" style="text-decoration: none; color: black;">Chemistry</a><br>
-        <a href="{% url 'filtered_books' 'Java'|lower %}" style="text-decoration: none; color: black;">Java</a><br>
-        <a href="{% url 'filtered_books' 'C Programming'|lower %}" style="text-decoration: none; color: black;">C Programming</a><br>
-        <a href="{% url 'filtered_books' 'Social'|lower %}" style="text-decoration: none; color: black;">Social</a><br>
-        <a href="{% url 'filtered_books' 'Biology'|lower %}" style="text-decoration: none; color: black;">Biology</a><br>
-        <a href="{% url 'filtered_books' 'health'|lower %}" style="text-decoration: none; color: black;">
-          Health&Fitness</a><br>
-        <a href="{% url 'filtered_books' 'Nutrition'|lower %}" style="text-decoration: none; color: black;">
-            Food & Nutrition</a><br>
-        <a href="{% url 'filtered_books' 'Ncert'|lower %}" style="text-decoration: none; color: black;">Ncert</a><br>
-        <a href="{% url 'filtered_books' 'Science'|lower %}" style="text-decoration: none; color: black;">Science</a><br>
-        <a href="{% url 'filtered_books' 'English'|lower %}" style="text-decoration: none; color: black;">English</a><br>
-    </div>    
+    </div>
+    
 </div>
+
+<div class="horizontal-card" style="background-color: white;">
+    <div class="image-gallery">
+        <a href="{% url 'selfhelp_books' %}" target="_blank">
+            <img src="https://sa1s3optim.patientpop.com/assets/images/provider/photos/2589272.jpg" alt="Image 1">
+        </a>
+        <a href="{% url 'children' %}" target="_blank">
+            <img src="https://www.okayestmoms.com/wp-content/uploads/2021/06/KidsBooks-01-1024x1024.webp" alt="Image 2">
+        </a>
+        <a href="{% url 'kannada_books' %}" target="_blank">
+            <img src="https://www.thelatestwebs.com/wp-content/uploads/2023/01/Kannada-book-Feature-Image.png" alt="Image 3">
+        </a>
+        
+    </div>
+</div>
+
+
+<div class="footer" id="myFooter">
+    <p>&copy; 2023 @sirishapentakota. All rights reserved.</p>
+    <!-- Add any additional footer content or links here -->
+</div>
+
+<script>
+    window.onscroll = function() {
+        var footer = document.getElementById("myFooter");
+        
+        // Display the footer when the user has scrolled to the bottom
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            footer.style.display = "block";
+        } else {
+            footer.style.display = "none";
+        }
+    };
+</script>
+
 </body>
 </html>

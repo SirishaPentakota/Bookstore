@@ -12,30 +12,33 @@
         body {
             background-size: cover;
             background-position: center;
-            background-image: url('https://media.istockphoto.com/id/825778252/photo/blue-sky-and-white-clouds-background.jpg?s=612x612&w=0&k=20&c=u1jkNZutv8H344KPxrgtfIHOMuWdU4H8PQ7_rvSI-wI=');
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/007/934/086/small/abstract-purple-and-pink-gradient-waves-background-glowing-lines-on-purple-background-vector.jpg');
             padding: 115px;
         }
         .custom-size {
             width: 250px;
-            height: 150px;
+            height: 100px;
         }
-        .login-button {
+        .login {
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            color: black;
-            background-image: linear-gradient(45deg, red, pink, orange);
+            color: white;
+            background-color: orange;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: 80%; /* Button width to fill its container */
+            max-width: 250px; /* Set a maximum width if desired */
+            margin-top: 15px; /* Add margin from the previous element */
         }
         .custom-bg {
-            background-color:white; /* Custom green color */
-            color: #fff; /* Text color for better visibility */
+            background-color: white;
+            color: black; 
+            padding:15px; 
         }
         .top-buttons {
             display: flex;
-           
             align-items: center;
             padding: 15px;
         }
@@ -46,45 +49,40 @@
             font-size: 20px;
             margin-right: 15px;
         }
+
     </style>
     </head>
     <body>
-
-        <div class="top-buttons">
-            <b><a href="{% url 'home' %}">Home</a>
-            
-            <b><a href="{% url 'filtered_books' 'all' %}">Books</a>
+        <div class="navbar">
+            {% include 'navbar.html' %}
         </div>
+        
         <center>
             {% if messages %}
             <div>
                 {% for message in messages %}
-                    <p style="color: red;">{{ message }}</p>
+                    <p style="color:black;">{{ message }}</p>
                 {% endfor %}
             </div>
             {% endif %}
         
             <div class="card custom-size">
-            <div class="card custom-bg">
-            <img src="https://img.freepik.com/premium-vector/kids-tree-logo-vector-icon-design-illustration_1948-2575.jpg?w=2000"
-                style="width: 150px;" alt="logo">
-            <form  action="" method="POST">{% csrf_token %}
-            <p style="color: black;"> Please login to your account</p>
-            <br>
-            <input type="text" name="username" id="username" placeholder="Enter Username" required>
-            <br></br>
-            <input type="password" name="password" placeholder="Enter password" required>
-            <br></br>
-            <button type="submit" class="login-button">Login</button><br>
+                <div class="card custom-bg">
+                    <h1 style="color: blue;">LOGIN</h1>
+                    <form  action="" method="POST">{% csrf_token %}
+                        <p style="color: black;">Please login to your account</p>
+                        <br>
+                        <input type="text" name="username" id="username" placeholder="Enter Username" required>
+                        <br><br>
+                        <input type="password" name="password" placeholder="Enter password" required><br><br>
+                        
+                        <button type="submit" class="login">Login</button><br><br>
             
-            <p style="color: black;" >Don't have account? <a  href="/register/">Register</a></p>
-            <a href="/forgot-password/">Forgot Password?</a></p>
-        </form>
-            
+                        <p style="color: black;">Don't have an account? <a href="/register/">Register</a></p>
+                        <a href="/forgot-password/">Forgot Password?</a>
+                    </form>
+                </div>
             </div>
-            </div>
-            
         </center>
-        
     </body>
 </html>

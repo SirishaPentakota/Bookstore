@@ -1,13 +1,7 @@
 @import 'bookstyles.css';
-body {
-  background-image: url('https://images.unsplash.com/photo-1622010652810-eba11f92f90f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8M');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 0;
-}
+
 .navbar {
-  background-color: blue;
+  
   color: #fff;
   display: flex;
   padding: 15px;
@@ -16,41 +10,64 @@ body {
 }
 .navbar-search {
   display: flex;
-  margin-left: 400px;
+  margin-left: 300px;
   align-items: center;
 }
-.navbar-search input {
-  padding: 10px;
-  border: None;
-  padding-right: 210px;
-  /* Add space for the search icon */
-}
-.navbar-search button {
-  padding: 10px;
+
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border-radius: 25px; /* Adjust the value for rounded edges */
   background-color: white;
+  padding: 10px; /* Adjust the padding as needed */
+}
+
+/* Add styles for the integrated search input */
+.navbar-search input.rounded-search {
+  flex: 1;
   border: none;
-  color: blue;
+  padding: 6px; /* Adjust the padding as needed */
+  font-size: 14px;
+  background-color: transparent; /* Remove the background color */
+  outline: none; /* Remove the default outline */
+}
+
+/* Add styles for the search button */
+.navbar-search button.search-button {
+  background-color: transparent;
+  border: none;
   cursor: pointer;
 }
+
 .login-button {
-  padding: 8px 16px;
-  background-color: #ff9f00;
-  border: none;
-  color: #fff;
-  margin-left: 20px;
-  text-decoration: none; /* Remove the underline from the login button */
+  padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: black; /* Change background color to black */
+    border: 2px solid white; /* Change border to white */
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80%; /* Button width to fill its container */
+    max-width: 250px; /* Set a maximum width if desired */
+    margin-top: 15px; /* Correct the margin property */
 }
 .my-account {
+  display: flex; /* Add this property to make the items align horizontally */
+  align-items: center;
   position: relative;
-  margin-right: 5px;
-  /* Add some space between "My Account" and other items on the right */
+  margin-left: 20px;
+  font-family: "arial";
+  
 }
 .my-account-link {
   display: flex;
   align-items: center;
   color: white;
   text-decoration: none;
-  /* Add other styles for the "My Account" link as needed */
+  font-family: "arial";
+ 
 }
 .my-account-link img {
   width: 28px;
@@ -62,22 +79,23 @@ body {
 .horizontal-card {
   height: 60px; /* Adjust the height as needed */
   width: 110%;
-  background-color: #ffffff; 
+  
 }
 .sidebar {
   margin-left: 50px;
 }
 .vertical-card {
   height: flex; /* Adjust the height as needed */
-  width: 20%;
+  width: 15%;
   background-color: #ffffff; /* Set the background color of the card */
   border: 1px solid #cccccc; /* Add a border around the card */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a box shadow for a subtle effect */
 }
 
 #remainingFilters {
-  display: block;  /* Show the remaining filters */
+  display: block;  
   margin-top: 10px;  /* Add some spacing between main and remaining filters */
+  font-family: "arial";
 }
 .img {
   width: 150px;
@@ -125,10 +143,7 @@ body {
   text-decoration:solid;
   text-size-adjust: 10px;/* Change the color to your desired value */
 }
-img {
-  width: 100px;
-  height: auto;
-}
+
 .book-details {
     margin-left: 25px;
     flex: 1;
@@ -145,14 +160,7 @@ img {
   border-radius: 5px;
   
 }
-.dashboard-button{
-  padding: 8px 16px;
-  background-color: #ff9f00;
-  border: none;
-  color: #fff;
-  margin-left: 20px;
-  text-decoration: none;
-}
+
 .background-container {
   position: relative;
   text-align: center;

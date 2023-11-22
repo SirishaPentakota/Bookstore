@@ -41,6 +41,4 @@ document.addEventListener('DOMContentLoaded', function() {
         dropdownContent.style.display = "block";
     }
 }
-  
-
 

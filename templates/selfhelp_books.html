@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Self-Help Books</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'bookstyles.css' %}" />
+    
+    <!-- Add this in the <head> section of your HTML -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            background-image: url('https://png.pngtree.com/background/20210717/original/pngtree-purple-abstract-light-background-picture-image_1437451.jpg');
+        }
+
+        .book-card {
+            background-color: white;
+            text-align: center;
+            padding: 5px;
+            margin-left: 40px;
+            width: 185px;
+            height: auto;
+            border: 2px solid #ccc;
+        }
+
+        .book-card img {
+            max-width: 60%;
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        {% include 'navbar.html' %}
+    </div>
+    {% if user.is_authenticated %}
+    <h2 style="color: black">
+        Hi {{ user.username }}! Welcome to the Self-Help Bookstore
+    </h2>
+    {% else %}
+    <h2 style="color: black">Welcome to the Self-Help Bookstore</h2>
+    {% endif %}
+    <div class="book-list">
+      
+      {% if selfhelp_book %}
+      {% for book in selfhelp_book %}
+      <div class="book-card" style="background-color: white">
+          <img src="{{ book.cover.url }}" alt="{{ book.title }} Cover" />
+          <h3>{{ book.title }}</h3>
+          <p>Author: {{ book.author }}</p>
+          <p>Price: {{ book.price }}</p>
+          {% if book.pdf %}
+          <div class="pdf-links">
+              <a href="{{ book.pdf.url }}" target="_blank" rel="noopener noreferrer">View PDF</a>
+              <a href="{{ book.pdf.url }}" download style="background-color: green">Download PDF</a>
+          </div>
+          {% else %}
+          <b><p style="color: red">No PDF available</p></b>
+          {% endif %}
+          
+          {% if book.flipkart_url %}
+          <a href="{{ book.flipkart_url }}" target="_blank" rel="noopener noreferrer" class="save-button" style="background-color: orange">Buy Now</a>
+          {% endif %}
+          {% if user.is_authenticated %}
+          {% if book.title in user_saved_titles %}
+              <a href="{% url 'dashboard' %}" style="background-color: orangered" class="save-button" id="go-to-cart-button">Go to Cart</a>
+          {% else %}
+              <a href="{% url 'save_selfhelp_book' book.title %}" id="add-to-cart-button">Add to Cart</a>
+          {% endif %}
+          {% endif %}
+      </div>
+      {% endfor %}
+  {% else %}
+  <h2>Sorry, no self-help books found!</h2>
+  {% endif %}
+    </div>  
+</body>
+</html>

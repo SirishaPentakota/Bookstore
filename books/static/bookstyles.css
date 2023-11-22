@@ -7,14 +7,17 @@
   }
   
   .book-card {
-    width: 200px;
-    border: 1px solid #ccc;
-    padding: 10px;
+    background-color: white;
     text-align: center;
-  }
+    padding: 5px;
+    width: 200px;
+    height: auto;
+    
+    border: 2px solid #ccc; 
+}
   
   .book-card img {
-    max-width: 60%;
+    max-width: 100%;
     height: auto;
   }
   

@@ -1,75 +1,105 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Books</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-<HASH>" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{% static 'bookstyles.css' %}">
-<style>
-  body {
-            background-size: cover;
-            background-position: center;
-            background-image: url('https://media.istockphoto.com/id/825778252/photo/blue-sky-and-white-clouds-background.jpg?s=612x612&w=0&k=20&c=u1jkNZutv8H344KPxrgtfIHOMuWdU4H8PQ7_rvSI-wI=');
-            padding: 115px;
-        }
-        img {
-    width: 65px;
-    height:auto;
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'bookstyles.css' %}" />
+    
+    <link
+      rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"integrity="sha512-<HASH>"crossorigin="anonymous"referrerpolicy="no-referrer"/>
+    <style>
+
+    body{
+      background-image: url('https://img.freepik.com/free-vector/gradient-smooth-background_23-2148969006.jpg');
+    }
+    .book-card {
+    background-color: white;
+    text-align: center;
+    padding: 5px;
+    margin-left: 40px;
+    width:185px;
+    height: auto;
+    border: 2px solid #ccc; 
+}
+.book-card img {
+    max-width: 60%;
+    height: auto;
   }
-  .book-details {
-      margin-left: 25px;
-      flex: 1;
-  }
-  .pdf-links a {
-    display: inline-block;
-    padding: 5px 8px;
-    justify-content: center;
-   align-items: center;
-   gap:5px;
-    background-color: #007bff;
+  .add-to-cart-button {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor:point;
+    background-color: orangered;
     color: #fff;
+    border:none;
+    width: 185px; /* Adjust the width as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
     border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer; 
+}
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      {% include 'navbar.html' %}
+  </div>
+  
+    {% if user.is_authenticated %}
+    <h1 style="color: red">
+      Hi {{ user.username }}! Welcome to the Online Bookstore
+    </h1>
+    {% else %}
+    <h1 style="color: orangered">Welcome to the Online Bookstore</h1>
+    {% endif %}
     
-  }
-  </style>
-</head>
-<body >
-  {% if user.is_authenticated %}
-  <h1 style="color: red;">Hi {{ user.username }}! Welcome to Online bookstore</h1>
-  {% else %}
-  <h1 style="color: orangered;">Welcome to Online bookstore</h1>
-  {% endif %}
-    <div class="book-list" >
+    <div class="book-list">
       {% if books %}
         {% for book in books %}
-            <div class="book-card" style="background-color: white;">
-              <img src="{{ book.cover.url }}" alt="{{ book.title }} Cover">
-                <h3>{{ book.title }}</h3>
-                <p>Author: {{ book.author    }}</p>
-               {% if book.pdf %}
-              <a href="{{ book.pdf.url }}" target="_blank" rel="noopener noreferrer">View PDF</a>
-              <a href="{{ book.pdf.url }}" download style="background-color:green;">Download PDF</a>
-              {% else %}
-              <b> <p style="color:red" >No PDF available</p></b>
-              {% endif %}
-              {% if book.flipkart_url %}
-              <a href="{{ book.flipkart_url }}" target="_blank" rel="noopener noreferrer" class="save-button" style="background-color:orange;">Buy Now</a>
-              {% endif %}
-              {% if user.is_authenticated %}
+          <div class="book-card" style="background-color: white">
+            <img src="{{ book.cover.url }}" alt="{{ book.title }} Cover" />
+            <h3>{{ book.title }}</h3>
+            <p>Author: {{ book.author }}</p>
+            <p>Price:{{book.price}}</p>
+            {% if book.pdf %}
+              <div class="pdf-links">
+                <a href="{{ book.pdf.url }}" target="_blank" rel="noopener noreferrer">View PDF</a>
+                <a href="{{ book.pdf.url }}" download style="background-color: green">Download PDF</a>
+              </div>
+            {% else %}
+              <b><p style="color: red">No PDF available</p></b>
+            {% endif %}
+    
+            {% if book.flipkart_url %}
+              <a href="{{ book.flipkart_url }}" target="_blank" rel="noopener noreferrer" class="save-button" style="background-color: orange">Buy Now</a>
+            {% endif %}
+    
+            {% if user.is_authenticated %}
               {% if book in user.userprofile.saved_books.all %}
-              <a href="{% url 'dashboard' %}" style="background-color: orangered"class="save-button">Go to Cart</a>
+                <a href="{% url 'dashboard' %}" style="background-color: orangered" class="save-button">Go to Cart</a>
+                
               {% else %}
-              <a href="{% url 'save_book' book.title %}" style="background-color: orangered" class="save-button">Add to Cart</a>
+                <!-- Add to Cart button that calls the 'save_book' view -->
+                <form method="post" action="{% url 'save_book' book.title %}">
+                  {% csrf_token %}
+                  <button type="submit"   class="add-to-cart-button">Add to Cart</button>
+                </form>
               {% endif %}
-              {% endif %}
+            {% endif %}
           </div>
-            {% endfor %}
-        {% else %}
-            <h2>Sorry,no results found!</h2>  
-        {% endif %}  
+        {% endfor %}
+      {% else %}
+        <h2>Sorry, no results found!</h2>
+      {% endif %}
     </div>
+    <br>
+    
+    
 </body>
-</html>
+<html>

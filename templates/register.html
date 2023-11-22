@@ -11,7 +11,7 @@
             body {
                 background-size: cover;
                 background-position: center;
-                background-image: url('https://img.freepik.com/free-photo/studio-background-concept-abstract-empty-light-gradient-purple-studio-room-background-product-plain-studio-background_1258-54722.jpg');
+                background-image: url('https://t4.ftcdn.net/jpg/05/66/19/59/360_F_566195976_gl6WrMKWlYFBXlchuk9ZQMZGA2LlynNW.jpg');
                 padding: 115px;
             }
             .custom-size {
@@ -53,11 +53,10 @@
             </style>
     </head>
     <body>
-        <div class="top-buttons">
-            <b><a href="{% url 'home' %}">Home</a>
-            <b><a href="{% url 'login' %}">Login</a>
-            <b><a href="{% url 'filtered_books' 'all' %}">Books</a>
+        <div class="navbar">
+            {% include 'navbar.html' %}
         </div>
+        
         {% if error_message %}
         <div class="alert alert-danger" role="alert">
             {{ error_message }}

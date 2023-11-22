@@ -1,0 +1,48 @@
+/* static/bookstyles.css */
+
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .book-card {
+    background-color: white;
+    text-align: center;
+    padding: 5px;
+    width: 100px;
+    height: auto;
+    border: 2px solid #ccc; 
+}
+  
+  .book-card img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .book-card h3 {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  .book-card p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .book-card a {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* Add more styles as needed */
+  
+  
+  
+  

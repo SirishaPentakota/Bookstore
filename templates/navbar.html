@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <style>
+                body {
+                margin: 0; /* Remove default body margin */
+                padding: 0; /* Remove default body padding */
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+             body {
+                overflow-x: hidden;
+                max-width: 100%;
+            }
+            .navbar {
+                
+                background-color: black;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 0 9.5px;
+            }
+
+            .navbar-search {
+                display: flex;
+                align-items: center;
+                margin-left: 220px;
+            }          
+            .search-container {
+                display: flex;
+                align-items: center;
+                border-radius: 25px;
+                background-color: white;
+                padding: 10px;
+            }
+    
+            .navbar-search input.rounded-search {
+                flex: 1;
+                border: none;
+                padding: 6px;
+                font-size: 14px;
+                background-color: transparent;
+                outline: none;
+            }
+    
+            .navbar-search button.search-button {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+            }
+    
+            .login-button {
+                padding: 8px 16px;
+                background-color: #ff9f00;
+                border: none;
+                color: #fff;
+                text-decoration: none;
+                margin-left: 300px;
+            }
+
+            .dashboard-button {
+                padding: 8px 14px;
+                
+                background-color: black; /* Change the background color to black */
+                border-radius: 5px;
+                color: white; /* Change the text color to white */
+                margin-right:20px ;
+                margin-left: 140px;
+                text-decoration: none;
+                font-family: "Arial";
+                border: 1px solid white; /* Add a white border */
+                
+            }
+            .dashboard-button {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+            .my-account {
+                display: flex; /* Add this property to make the items align horizontally */
+                align-items: center;
+                position: relative;
+                margin-left: 30px;
+                font-family: "arial";
+                
+                
+            }
+
+            .my-account-link {
+            display: flex;
+            align-items: center;
+            color: white;
+            margin-left: 25px;
+            text-decoration: none;
+            cursor: pointer;
+            }
+            
+            .my-account-link img {
+            width: 28px;
+            height: 28px;
+            margin-left: 60px; /* Add some space between the icon and text */
+            /* Add other styles for the icon as needed */
+            }
+            .img {
+            width: 150px;
+            margin-right: 5px;
+            }
+            .dropdown {
+            position: relative;
+            display: inline-block;
+            }
+            #dropdown-content {
+                display: none;
+                position: absolute;
+                border-radius: 3px;
+                bottom: -300%; /* Adjust to move the content below the button */
+                left: 80%;
+                transform: translateX(-50%);
+                background-color: white;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            }
+
+            .dropdown-content a:hover {
+            background-color:blue;
+            }
+            .username {
+            color:black; 
+            text-decoration:solid;
+            text-size-adjust: 10px;/* Change the color to your desired value */
+            }
+    
+            .horizontal-card {
+                height: 25px;
+                width: 100%;
+                background-color: #ffffff;
+            }
+    
+    .navbar-links {
+        display: flex;
+        width: 100%;
+       
+        padding: 15px 0; /* Add some padding for spacing */
+        gap: 50px;
+    }
+
+    .navbar-link {
+    min-height: 40px; /* Set the same height as the navbar-links container */
+    color: white;
+    font-family: "arial";
+    font-size: 14px;
+    text-decoration: none;
+    margin-left: 55px;
+    
+    /* Add other styles if needed */
+}
+
+
+    .login-button {
+  padding: 9px 17px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: black; /* Change background color to black */
+    border: 1px solid white; /* Change border to white */
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80%; /* Button width to fill its container */
+    max-width: 250px; /* Set a maximum width if desired */
+    margin-top: 15px; /* Correct the margin property */
+}
+
+.logo {
+    margin-left: 250px;
+    width: 80px; /* Set the width of the logo as needed */
+    height: 50px; /* Automatically adjust the height to maintain aspect ratio */
+
+}
+
+.todo-button button {
+            background-color: blue;
+            border-radius: 5px;
+            color: white;
+            margin-left: 100px; 
+            width: 80px; 
+            height: 30px; 
+            border: 2px solid white;
+            cursor: pointer;
+}
+.todo-list {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .task-text {
+        flex: 1;
+    }
+
+    .delete-button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        align-self: flex-end;
+    }
+
+    .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            /* Add styles for your button here */
+            background-color: black;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            
+            font-family: "arial";
+            font-size: 14x;
+           
+        }
+        /* Style for the dropdown content (hidden by default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            width: 200px; /* Adjust the width to your desired value */
+            min-width: 500px; /* Set a minimum width */
+            max-height: 500px; /* Set a maximum height */
+            
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            
+            column-count: 3; /* Distribute links into two columns */
+        }
+
+
+        /* Style for the dropdown links */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Style for the dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color:darkblue;
+            color: white;
+        }
+
+        /* Style for the dropdown container when the button is hovered */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        
+</style>
+
+    </head>
+    <body>
+    <div>
+        <div class="navbar" >
+            <div class="navbar-logo">
+                <img src="https://studentprojectguide.com/wp-content/uploads/2017/08/ONline-book-store.jpg" alt="Logo" class="logo">
+            </div>
+            <div class="navbar-search">
+              <form method="GET" action="{% url 'book_search' %}">
+                  <div class="search-container">
+                      <input type="text" name="query" placeholder="Search for books..." class="rounded-search">
+                      <button type="submit" class="search-button">
+                          <i class="fas fa-search"></i>
+                      </button>
+                  </div>
+              </form>
+          </div>
+          
+          <div class="todo-button">
+            {% if user.is_authenticated %}
+            <button id="todo-button" onclick="toggleTodoForm()">To-Read</button>
+            {% endif %}
+        </div>
+
+        <div id="todo-form-container" style="display: none; position: absolute; top: 80px; right: 300px; width: 300px; background-color: black; color: white; font-weight: bold; padding: 10px; border: 1px solid #ccc;">
+            <div class="container">
+                <center><h1 style="color: aqua;">To-Read List</h1></center>
+                <form id="taskForm">
+                    <input type="text" id="bookTitle" placeholder="Enter Book Title">
+                    <input type="text" id="concept" placeholder="Enter Concept">
+                    <input type="text" id="pageNumber" placeholder="Enter Page Number">
+                    <button onclick="addTask()" style="background-color: greenyellow;">Add Task</button>
+                </form>
+                <ul id="taskList" class="todo-list"></ul>
+            </div>
+        </div>
+
+       
+          <div class="navbar-login">
+            {% if not user.is_authenticated %}
+              <a href="{% url 'login' %}" class="login-button">Login</a>
+            {% endif %}
+          </div>
+          <div class="dashboard-link">
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="dashboard-button">
+                Cart
+                <span id="cart-count" class="cart-count">{{ user.userprofile.saved_books.count }}</span>
+            </a>
+            {% endif %}
+        </div>
+        
+        <div class="my-account">
+            <div class="my-account-link" onclick="toggleDropdown()">
+                <img src="https://icon-library.com/images/my-account-icon-png/my-account-icon-png-22.jpg" alt="My Account Icon">
+                My Account
+                
+                <div id="dropdown-content">
+                    {% if user.is_authenticated %}
+                        <br>
+                        <span class="username">{{ user.username }}&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+                        <span style="color: black" class="email">{{ user.email }}&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
+                        <b><a href="{% url 'logout' %}" style="color: black;">Logout</a></b>
+                    {% endif %}
+                    <br>
+                </div>
+            </div>
+        </div>
+        </div>
+    
+        <div class="horizontal-card" style="background-color: black; color: white;">
+            <center>
+                <div class="navbar-links">
+                    <a href="{% url 'home' %}" class="navbar-link">HOME</a><br>
+                   
+                    <div class="dropdown">
+                        <button class="dropbtn">ALL CATEGORIES </button>
+                        <div id="categoryDropdown" class="dropdown-content" >
+                            <a href="{% url 'all_books' 'Python' %}">Python</a>
+                            <a href="{% url 'all_books' 'C Language' %}">C Language</a>
+                            <a href="{% url 'all_books' 'HTML' %}">HTML</a>
+                            <a href="{% url 'all_books' 'SSC' %}">SSC</a>
+                            <a href="{% url 'all_books' 'Stories' %}">Stories</a>
+                            <a href="{% url 'all_books' 'Machine Learning' %}">Machine Learning</a>
+                            <a href="{% url 'all_books' 'Science' %}">Science</a>
+                            <a href="{% url 'all_books' 'Java' %}">Java</a>
+                            <a href="{% url 'all_books' 'CSS' %}">CSS</a>
+                            <a href="{% url 'all_books' 'Travel &Tourism' %}">Travel & Tourism</a>
+                            <a href="{% url 'all_books' 'Trading Books' %}">Trading Books</a>
+                            <a href="{% url 'all_books' 'Computer & Internet' %}">Computer&Internet</a>
+                            <a href="{% url 'all_books' 'Fiction' %}">Fiction</a>
+                            <a href="{% url 'all_books' 'Literature' %}">Literature</a>
+                            <a href="{% url 'all_books' 'Family & Relationships' %}">Family&Relationships</a>
+                            <a href="{% url 'all_books' 'Medical Books' %}">Medical Books</a>
+                            <a href="{% url 'all_books' 'Horror' %}">Horror</a>
+                            <a href="{% url 'all_books' 'Humour' %}">Humour</a>
+                            <a href="{% url 'all_books' 'Religion & Spirituality' %}">Religion&Spirituality</a>
+                            <a href="{% url 'all_books' 'Combo' %}">Combo Pack</a>
+                            <a href="{% url 'all_books' 'Action & Adventure' %}">Action&Adventure</a>
+                            <a href="{% url 'all_books' 'Romance' %}">Romance</a>
+                            
+                            <!-- Add more category links as needed -->
+                        </div>
+                    </div>
+
+                    <a href="{% url 'kannada_books' %}" class="navbar-link">KANNADA BOOKS</a>
+                    
+                    <a href="{% url 'selfhelp_books' %}" class="navbar-link">SELF-HELP</a>
+                    <a href="{% url 'children' %}" class="navbar-link">CHILDREN</a>
+                    <a href="{% url 'book_list' %}" class="navbar-link ">ALL BOOKS</a>
+                    <div class="music-button" >
+                        <button id="playMusicButton" style="background-color: black; color:white ;border: none; cursor: pointer;">PLAY 🎸♫🎸</button>
+                    </div>
+                    
+                    <audio id="backgroundMusic" loop>
+                        <source src="media\book\audios\peaceful-garden-music-with-birdsx27-sounds-165222 (1).mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    
+                </div>
+            </center>
+        </div>
+      </div>
+   
+    <script>
+       function toggleDropdown() {
+        var dropdownContent = document.getElementById("dropdown-content");
+        if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+        } else {
+            dropdownContent.style.display = "block";
+        }
+    }
+
+    function toggleCategoryDropdown() {
+        var dropdownContent = document.getElementById("categoryDropdown");
+        if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+        } else {
+            dropdownContent.style.display = "block";
+        }
+    }
+
+        function addToCart() {
+            cartCount++; // Increment the cart count
+            updateCartCount(); // Update the cart count display
+        }
+
+        function updateCartCount() {
+            var cartCountElement = document.getElementById("cart-count");
+            cartCountElement.textContent = cartCount;
+            cartCountElement.style.display = "inline"; // Display the cart count
+        }
+
+        
+
+        function toggleTodoForm() {
+            var todoFormContainer = document.getElementById("todo-form-container");
+            if (todoFormContainer.style.display === "none" || todoFormContainer.style.display === "") {
+                todoFormContainer.style.display = "block";
+                todoDetailsContainer.style.display = "block"; // Display details container
+            } else {
+                todoFormContainer.style.display = "none";
+                todoDetailsContainer.style.display = "none"; // Hide details container
+            }
+        }
+        var formVisible = false;
+
+function toggleForm() {
+    var taskForm = document.getElementById("taskForm");
+    formVisible = !formVisible;
+    if (formVisible) {
+        taskForm.style.display = "block";
+    } else {
+        taskForm.style.display = "none";
+    }
+}
+
+// Load tasks from Local Storage on page load
+window.onload = function() {
+    var storedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (storedTasks) {
+        tasks = storedTasks;
+        updateTaskList();
+    }
+};
+
+var tasks = [];
+
+function updateTaskList() {
+    var taskList = document.getElementById("taskList");
+    taskList.innerHTML = "";
+
+    for (var i = 0; i < tasks.length; i++) {
+        var taskText = tasks[i];
+        var taskItem = document.createElement("li");
+        taskItem.textContent = taskText;
+        taskList.appendChild(taskItem);
+    }
+}
+
+function addTask() {
+    var bookTitle = document.getElementById("bookTitle").value.trim();
+    var concept = document.getElementById("concept").value.trim();
+    var pageNumber = document.getElementById("pageNumber").value.trim();
+    var taskText = `Book Title: ${bookTitle}, Concept: ${concept}, Page Number: ${pageNumber}`;
+
+    if (bookTitle === "" || concept === "" || pageNumber === "") {
+        return;
+    }
+
+    tasks.push(taskText);
+
+    // Save tasks to Local Storage
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    document.getElementById("bookTitle").value = "";
+    document.getElementById("concept").value = "";
+    document.getElementById("pageNumber").value = "";
+
+    updateTaskList();
+}
+// ...
+
+function updateTaskList() {
+    var taskList = document.getElementById("taskList");
+    taskList.innerHTML = "";
+
+    for (var i = 0; i < tasks.length; i++) {
+        var taskText = tasks[i];
+
+        var taskItem = document.createElement("li");
+        taskItem.className = "todo-row";
+
+        var taskTextElement = document.createElement("span");
+        taskTextElement.textContent = taskText;
+        taskItem.appendChild(taskTextElement);
+
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-button";
+        deleteButton.onclick = (function(taskText) {
+            return function() {
+                deleteTask(taskText);
+            };
+        })(taskText);
+
+        taskItem.appendChild(deleteButton);
+
+        taskList.appendChild(taskItem);
+    }
+}
+
+
+function deleteTask(taskText) {
+    var index = tasks.indexOf(taskText);
+    if (index !== -1) {
+        tasks.splice(index, 1);
+
+        // Save updated tasks to Local Storage
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+
+        updateTaskList();
+    }
+}
+
+const playMusicButton = document.getElementById('playMusicButton');
+const backgroundMusic = document.getElementById('backgroundMusic');
+
+let isMusicPlaying = false;
+
+playMusicButton.addEventListener('click', () => {
+    if (isMusicPlaying) {
+        backgroundMusic.pause();
+        playMusicButton.textContent = 'PLAY 𝄞🎸♬ ';
+    } else {
+        backgroundMusic.play();
+        playMusicButton.textContent = 'PAUSE 𝄞🎸♬ ';
+    }
+
+    isMusicPlaying = !isMusicPlaying;
+});
+
+// Optional: Automatically pause music when the page unloads
+window.addEventListener('beforeunload', () => {
+    backgroundMusic.pause();
+});
+
+
+</script>
+    </body>
+</html>

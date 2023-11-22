@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login,authenticate,logout
@@ -10,16 +12,69 @@ from django.http import JsonResponse
 from .import models
 from django.db.models import Q
 import os
+
 from django.http import FileResponse
 from .forms import BookForm
 from .forms import BookSearchForm
 from .models import UserProfile,Book 
+from .models import KannadaBook,SELFHELP_BOOK,CHILDREN
+
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 # Create your views here.
 
 def home(request):
     return render(request,'index.html')
+def all_categories(request):
+    
+    return render(request, 'allcategories.html')
 
+def kannada_books(request):
+    kannada_books = KannadaBook.objects.all()
+    
+    if request.user.is_authenticated:
+        user_saved_titles = request.user.userprofile.saved_books.values_list('title', flat=True)
+    else:
+        user_saved_titles = []
+
+    context = {
+        'kannada_books': kannada_books,
+        'user_saved_titles': user_saved_titles,
+    }
+
+    return render(request, 'kannada_books.html', context)
+def selfhelp_books(request):
+    self_help_books = SELFHELP_BOOK.objects.all()
+    
+    if request.user.is_authenticated:
+        user_saved_titles = request.user.userprofile.saved_books.values_list('title', flat=True)
+    else:
+        user_saved_titles = []
+
+    context = {
+        'selfhelp_book': self_help_books,
+        'user_saved_titles': user_saved_titles,
+    }
+
+    return render(request, 'selfhelp_books.html', context)
+
+    
+def children(request):
+    children_books = CHILDREN.objects.all()
+    
+    if request.user.is_authenticated:
+        user_saved_titles = request.user.userprofile.saved_books.values_list('title', flat=True)
+    else:
+        user_saved_titles = []
+
+    context = {
+        'children_books': children_books,
+        'user_saved_titles': user_saved_titles,
+    }
+
+    return render(request, 'children_books.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -73,63 +128,155 @@ def add_book(request):
 
 
 def book_list(request):
-    books = Book.objects.all()
-    return render(request, 'books.html', {'books': books})
-
+    books = Book.objects.all()  # Retrieve all books
+    selfhelp_book = SELFHELP_BOOK.objects.all()
+    kannada_books = KannadaBook.objects.all()
+    children_books = CHILDREN.objects.all()
+    return render(request, 'books.html', {'books': books, 'kannada_books': kannada_books, 'selfhelp_book': selfhelp_book,'children_books':children_books})
 
 def book_search_view(request):
     form = BookSearchForm(request.GET)
-    
+
     if form.is_valid():
         query = form.cleaned_data['query']
 
         print("Search Query:", query)
 
-        # Filter books based on the search query in titles
-        results = Book.objects.filter(
+        # Filter books based on the search query in titles and authors using Q objects
+        book_results = Book.objects.filter(
             Q(title__icontains=query) | Q(author__icontains=query)
         )
+
+        # Combine the results from the "all_books" category
+        results = list(book_results)
+
         print("Results:", results)
     else:
+        # If the form is not valid, show all books as the default result
         results = Book.objects.all()
 
     return render(request, 'books.html', {'form': form, 'books': results})
 
-def filtered_books(request, title_query):
-    
-    if title_query == 'all':
-        books = Book.objects.all()
-    else:
-    # Filtering books based on title containing the query
-        category_books = Book.objects.filter(Q(title__icontains=title_query))
-        books=category_books
-    return render(request, 'filtered_books.html', {'books': books, 'title_query': title_query})
-
-@login_required
-def dashboard(request):
-    return render(request, 'dashboard.html')
 
 @login_required
 def save_book(request, book_title):
-     
     if request.user.is_authenticated:
-        book = get_object_or_404(Book, title=book_title)
-        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-        user_profile.saved_books.add(book)
-    return redirect('filtered_books', title_query=book_title)
+        try:
+            # Get the first book with the specified title
+            book = Book.objects.filter(title=book_title).first()
+            if book:
+                user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+                user_profile.saved_books.add(book)
 
+                # Display a success message
+                messages.success(request, f'Book "{book.title}" added to your saved books.')
+
+                # Render the books.html template with the updated context
+                books = Book.objects.all()
+                kannada_books = KannadaBook.objects.all()
+                selfhelp_books = SELFHELP_BOOK.objects.all()
+                children_books = CHILDREN.objects.all()
+                context = {
+                    'books': books,
+                    'kannada_books': kannada_books,
+                    'selfhelp_books': selfhelp_books,
+                    'children_books': children_books,
+                }
+                return render(request, 'books.html', context)
+            else:
+                # Handle the case where no book with the given title is found
+                return HttpResponseNotFound("Book not found.")
+        except Book.MultipleObjectsReturned:
+            # Handle the case where multiple books with the given title are found
+            return HttpResponse("Multiple books found with the same title. Please contact support.")
+    # Handle authentication or other error cases
+    return redirect('books')
+
+@login_required
+def save_children_book(request, book_title):
+    children_book = get_object_or_404(CHILDREN, title=book_title)
+
+    # Create or get the corresponding Book instance
+    book, created = Book.objects.get_or_create(
+        title=children_book.title,
+        author=children_book.author,
+        pdf=children_book.pdf,
+        cover=children_book.cover,
+        flipkart_url=children_book.flipkart_url,
+        
+        # Set the price to the value of children_book.price
+        price=children_book.price,
+    )
+
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    user_profile.saved_books.add(book)  # Save the Book instance to the user's profile
+
+    # Redirect back to the 'children' page
+    return redirect(reverse('children'))
+
+@login_required
+def save_kannada_book(request, book_title):
+    kannada_book = get_object_or_404(KannadaBook, title=book_title)
+
+    # Create or get the corresponding Book instance
+    book, created = Book.objects.get_or_create(
+        title=kannada_book.title,
+        author=kannada_book.author,
+        pdf=kannada_book.pdf,
+        cover=kannada_book.cover,
+        flipkart_url=kannada_book.flipkart_url,
+    )
+
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    user_profile.saved_books.add(book)  # Save the Book instance to the user's profile
+    
+    # Redirect back to the 'children' page
+    return redirect(reverse('kannada_books'))
+@login_required
+def save_selfhelp_book(request, book_title):
+    selfhelp_book = get_object_or_404(SELFHELP_BOOK, title=book_title)
+
+    # Create or get the corresponding Book instance
+    book, created = Book.objects.get_or_create(
+        title=selfhelp_book.title,
+        author=selfhelp_book.author,
+        pdf=selfhelp_book.pdf,
+        cover=selfhelp_book.cover,
+        flipkart_url=selfhelp_book.flipkart_url,
+        price=selfhelp_book.price,
+    )
+
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    user_profile.saved_books.add(book)  # Save the Book instance to the user's profile
+
+    # Redirect back to the 'selfhelp_books' page
+    return redirect(reverse('selfhelp_books'))
+
+
+
+@login_required
+def dashboard(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    saved_books = user_profile.saved_books.all()
+    return render(request, 'dashboard.html', {'saved_books': saved_books})
 def remove_book(request, book_title):
     if request.user.is_authenticated:
         try:
-            book = Book.objects.get(title=book_title)
-            request.user.userprofile.saved_books.remove(book)
-            # You might want to redirect to the dashboard or a success page
-            return redirect('dashboard')
-        except Book.DoesNotExist:
-            # Handle the case where the book doesn't exist
-            pass
+            # Get the first book with the specified title
+            book = Book.objects.filter(title=book_title).first()
+            if book:
+                request.user.userprofile.saved_books.remove(book)
+                # Redirect to the dashboard or a success page
+                return redirect('dashboard')
+            else:
+                # Handle the case where no book with the given title is found
+                return HttpResponseNotFound("Book not found.")
+        except Book.MultipleObjectsReturned:
+            # Handle the case where multiple books with the given title are found
+            return HttpResponse("Multiple books found with the same title. Please contact support.")
     # Handle authentication or other error cases
-    return redirect('dashboard')  # Redirect to the dashboard in case of er
+    return redirect('dashboard')  # Redirect to the dashboard in case of error
+
 
 def forgot_password(request):
     if request.method == 'POST':
@@ -145,3 +292,13 @@ def forgot_password(request):
             messages.success(request, 'New password created successfully.Please Login')
             return redirect('login') 
     return render(request, 'forgot_password.html')
+
+
+
+
+
+def all_books(request, title):
+    # Query the books based on the selected title
+    books = Book.objects.filter(title__icontains=title)  # Case-insensitive search by title
+
+    return render(request, 'books.html', {'title': title, 'books': books})

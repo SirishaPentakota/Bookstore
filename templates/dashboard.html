@@ -1,40 +1,88 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-<HASH>" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-<HASH>"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{% static 'bookstyles.css' %}">
-    
-</head>
-<body>
-    {% block content %}
-    {% if user.userprofile.saved_books.all %}
-    <center><h2 style="color: blue;">My Cart Items</h2></center>
+    <link rel="stylesheet" href="{% static 'bookstyles.css' %}" />
+    <style>
+      body {
+        background-image: url("https://png.pngtree.com/background/20210717/original/pngtree-purple-abstract-light-background-picture-image_1437451.jpg");
+      }
+      .book-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .book-card {
+        background-color: white;
+        text-align: center;
+        padding: 5px;
+        margin: 10px;
+        width: 185px;
+        height: auto;
+        border: 2px solid #ccc;
+    }
+
+    .book-card img {
+        max-width: 50%;
+        height: auto;
+    }
+      .dashboard-button {
+        position: relative; /* Add this */
+        display: inline-block; /* Add this */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">{% include 'navbar.html' %}</div>
+
+    {% block content %} {% if user.userprofile.saved_books.all %}
+    <center><h2 style="color: black">My Cart Items</h2></center>
     <div class="book-list">
-        {% for book in user.userprofile.saved_books.all %}
-        <div class="book-card" style="background-color: white; display: inline-block; margin: 10px;">
-            <img src="{{ book.cover.url }}" alt="{{ book.title }} Cover">
-            <h3>{{ book.title }}</h3>
-            <p>Author: {{ book.author }}</p>
-            {% if book.pdf %}
-            <a href="{{ book.pdf.url }}" target="_blank" rel="noopener noreferrer">View PDF</a>
-            <a href="{{ book.pdf.url }}" download style="background-color: green;">Download PDF</a>
-            {% else %}
-            <b> <p style="color:red">No PDF available</p></b>
-            {% endif %}
-            {% if book.flipkart_url %}
-            <a href="{{ book.flipkart_url }}" target="_blank" rel="noopener noreferrer" style="background-color:orange;">Buy Now</a>
-            {% endif %}
-            <a href="{% url 'remove_book' book.title %}" class="remove-button">Remove</a>
-        </div>
-        {% endfor %}
+      {% for book in user.userprofile.saved_books.all %}
+      <div
+        class="book-card"
+        style="background-color: white; display: inline-block; margin: 10px"
+      >
+        <img src="{{ book.cover.url }}" alt="{{ book.title }} Cover" />
+        <h3>{{ book.title }}</h3>
+        <p>Author: {{ book.author }}</p>
+        {% if book.pdf %}
+        <a href="{{ book.pdf.url }}" target="_blank" rel="noopener noreferrer"
+          >View PDF</a
+        >
+        <a href="{{ book.pdf.url }}" download style="background-color: green"
+          >Download PDF</a
+        >
+        {% else %}
+        <b> <p style="color: red">No PDF available</p></b>
+        {% endif %} {% if book.flipkart_url %}
+        <a
+          href="{{ book.flipkart_url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="background-color: orange"
+          >Buy Now</a
+        >
+        {% endif %}
+        <a href="{% url 'remove_book' book.title %}" class="remove-button"
+          >Remove</a
+        >
+      </div>
+      {% endfor %}
     </div>
     {% else %}
-    <center><h2 style="color: red;">No books added yet.</h2></center>
-    {% endif %}
-    {% endblock %}
-</body>
+    <center><h2 style="color: red">No books added yet.</h2></center>
+    {% endif %} {% endblock %}
+  </body>
 </html>
