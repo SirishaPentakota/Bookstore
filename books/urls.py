@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 from .views import  home,register,login_user,logout_user
 
-
 urlpatterns = [
     path('',home,name='home'),
     path('register/',register,name='register'),
@@ -15,6 +14,7 @@ urlpatterns = [
     path('Cart/', views.dashboard, name='dashboard'),
     path('save_book/<str:book_title>/', views.save_book, name='save_book'),
     path('remove_book/<str:book_title>/', views.remove_book, name='remove_book'),
+    path('forgot-password/', views.forgot_password, name='forgot_password'),
 ]
 
 

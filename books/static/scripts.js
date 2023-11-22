@@ -1,6 +1,3 @@
-
-
-
 function buyBook(bookId) {
     // Perform the logic for the 'Buy' button here.
     // For example, you could make an AJAX request to handle the purchase process.
@@ -45,4 +42,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
   
-  
+
+

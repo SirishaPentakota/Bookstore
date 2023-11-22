@@ -22,33 +22,38 @@ def home(request):
 
 
 def register(request):
-    
-    if request.method=='POST':
-        username=request.POST['username']
-        email=request.POST['email']
-        password=request.POST['password']
-        
-        user=User.objects.create_user(username=username,email=email,password=password)
-        user.save()
-        return redirect('home')
-    return render(request,'register.html')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
-def login_user(request):
-    
-    if request.method=='POST':
-        username=request.POST['username']
-        password=request.POST['password']
+        # Check if the username or email already exists
+        if User.objects.filter(username=username).exists():
+            error_message = 'Username already registered. Please choose a different username.'
+        elif User.objects.filter(email=email).exists():
+            error_message = 'Email already registered. Please use a different email.'
+        else:
+            # Create the user if not already registered
+            user = User.objects.create_user(username=username, email=email, password=password)
+            # You can also log the user in here if desired
+            return redirect('login')  # Redirect to login page after successful registration
         
-        user= authenticate(username=username,password=password)
+        return render(request, 'register.html', {'error_message': error_message})
+
+    return render(request, 'register.html')
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
         
         if user is not None:
             login(request, user)
-            messages.success(request, f"You are now logged in as {username}")
-            return redirect("home")
+            return redirect('home')  # Redirect to the home page after successful login
         else:
-            messages.error(request, "Invalid username or password")
-    user_form = AuthenticationForm()
-    return render(request,"login.html", {"user_form":user_form})
+            messages.error(request, 'Invalid username or password')  # Display error message
+
+    return render(request, 'login.html')
 
 def logout_user(request):
     logout(request)
@@ -126,5 +131,17 @@ def remove_book(request, book_title):
     # Handle authentication or other error cases
     return redirect('dashboard')  # Redirect to the dashboard in case of er
 
+def forgot_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
 
-
+        
+        if new_password == confirm_password:
+            user = User.objects.get(username=username)
+            user.set_password(new_password)
+            user.save()
+            messages.success(request, 'New password created successfully.Please Login')
+            return redirect('login') 
+    return render(request, 'forgot_password.html')
